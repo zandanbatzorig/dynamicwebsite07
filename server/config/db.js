@@ -3,7 +3,7 @@ const connectDB = async () => {
   
 try {
     mongoose.set('strictQuery', false);
-    const conn = await mongoose.connect('mongodb+srv://raddy:N7cJGzWpEtLxFfXT@cluster0.be7ts.mongodb.net/blog?retryWrites=true&w=majority',{
+    const conn = await mongoose.connect(process.env.MONGODB_URI,{
         serverSelectionTimeoutMS: 20000,
         socketTimeoutMS: 45000,
     });
