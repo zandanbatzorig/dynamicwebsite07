@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const connectDB = require('./server/config/db');
 const Sensor = require('./models/Sensor');
@@ -22,6 +23,10 @@ app.set('views', path.join(__dirname, 'views'));
 // Middleware for static files (e.g., CSS, JS, images)
 app.use(express.static('public'));
 
+// Middleware to parse POST data
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 // POST  Seed some sample data (optional, for testing)
 app.get('/sensor', async (req, res) => {
     await Sensor.create([
@@ -39,6 +44,18 @@ app.get('/sensor', async (req, res) => {
         { temp1: 24.2, temp2: 25.1, humi: 23.1 }
     ]);
     res.send('Sensor Sample data created!');
+});
+
+
+app.post('/store', async (req, res) => {
+    const { temp1, temp2, humi } = req.body;
+
+    try {
+        await Sensor.create({ temp1, temp2, humi });
+        res.send('Sensor data stored!');
+    } catch (err) {
+        res.status(500).send('Error storing data');
+    }
 });
 
 app.get('/showtable2', async (req, res) => {
