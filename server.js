@@ -1,9 +1,15 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
+const connectDB = require('./server/config/db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Connect to DB
+connectDB();
+
+// Set EJS as the view engine
 app.set('view engine', 'ejs');
 
 // Set EJS as the view engine
