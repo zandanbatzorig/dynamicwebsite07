@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= locals.title %></title>
+    <meta name="description" content="<%= locals.description %>">
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" defer src="/js/script.js"></script>
+</head>
+<body>
+    <h3>Table database</h3>
+    <p><%= locals.description %></p>
+    <a href="/">Go back to Home</a>
+    <h3>Styled Table Example</h3>
+    <div class="stable-container">
+    <table class="sstyled-table">
+        <thead>
+        <tr>
+            <th width>ID</th>
+            <th width>Temperature 1</th>
+            <th width>Temperature 2</th>
+            <th width>Humidity</th>
+            <th width>Date</th>
+            <th width>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% sensor.forEach(sensor2 => { %>
+        <tr> 
+            <td><%= sensor2._id %></td>           
+            <td><%= sensor2.temp1 %></td>
+            <td><%= sensor2.temp2 %></td>
+            <td><%= sensor2.humi %></td>
+            <td><%= sensor2.createdAt.toDateString() %></td>
+            <td><%= sensor2.createdAt.toTimeString() %></td>
+        </tr>
+        <% }) %>
+    </tbody>
+    </table>
+</div>
+<p>Current page : <%= current %></p>
+<p>Next page : <%= nextPage %></p>
+<p>Total pages : <%= totalPages %></p>
+
+<% if (nextPage !== null) { %>
+    <div style="text-align: right;">
+    <a href="/showtable2/?page=<%= nextPage %>" class="pagination2"> View Older Posts &gt; </a>
+    </div>
+<% } else { %>
+    <div style="text-align: right;">
+    <a href="#" class="pagination2"> View Older Posts &gt; </a>
+    </div>
+<% } %>
+
+
+
+<% if (current == 1) { %>
+    <div style="text-align: left;">
+        <a href="#" class="pagination2">&lt; View Newer Posts </a>
+    </div>
+<% } else { %>
+    <div style="text-align: left;">
+        <a href="/showtable2/?page=<%= current-1 %>" class="pagination2">&lt; View Newer Posts </a>
+    </div>
+<% } %>
+
+
+</body>
+</html>
